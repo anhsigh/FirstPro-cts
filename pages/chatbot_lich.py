@@ -2,20 +2,24 @@
 
 import streamlit as st
 from modules import exporter
-
-# import datetime
-# import pandas as pd
-# import io
+import datetime
+import pandas as pd
+import io
 
 if "lich_da_luu" not in st.session_state:
     st.session_state["lich_da_luu"] = []
 
 with st.form(key="form_them_lich"):
     mo_ta = st.text_input("Mô tả sự kiện:")
-    ngay_bat_dau = st.date_input("Ngày bắt đầu:")
-    thoi_gian_bat_dau = st.time_input("Thời gian bắt đầu:")
-    ngay_ket_thuc = st.date_input("Ngày kết thúc:")
-    thoi_gian_ket_thuc = st.time_input("Thời gian kết thúc:")
+
+    col1, col2 = st.columns(2)
+    ngay_bat_dau = col1.date_input("Ngày bắt đầu:")
+    thoi_gian_bat_dau = col2.time_input("Thời gian bắt đầu:")
+
+    col3, col4 = st.columns(2)
+    ngay_ket_thuc = col3.date_input("Ngày kết thúc:")
+    thoi_gian_ket_thuc = col4.time_input("Thời gian kết thúc:")
+
     nut_them = st.form_submit_button("Thêm lịch")
 
 if nut_them:
@@ -52,9 +56,11 @@ if st.button("Lưu vào CSV"):
     )
     if thanh_cong:
         st.success(thong_bao)
-        # Đoạn code để tải file CSV sau khi lưu thành công
-        with open("lich.csv", "r", encoding="utf-8") as f:
-            csv_data = f.read()
+        # Sử dụng pandas và io.StringIO để tạo file CSV trong bộ nhớ
+        df = pd.DataFrame(st.session_state["lich_da_luu"])
+        csv_buffer = io.StringIO()
+        df.to_csv(csv_buffer, index=False, encoding="utf-8")
+        csv_data = csv_buffer.getvalue()
 
         st.download_button(
             label="Tải xuống file CSV",
