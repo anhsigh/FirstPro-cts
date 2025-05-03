@@ -20,6 +20,8 @@ if prompt:
     # Ví dụ đơn giản: mô phỏng phản hồi
     chatbot_response = f"Chào bạn! Bạn đã nói: '{prompt}'"
 
-    st.session_state["messages"].append({"role": "assistant", "content": chatbot_response})
+    st.session_state["messages"].append(
+        {"role": "assistant", "content": chatbot_response}
+    )
     with st.chat_message("assistant"):
         st.markdown(chatbot_response)

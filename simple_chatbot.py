@@ -17,22 +17,28 @@ if prompt := st.chat_input("Bạn muốn hỏi gì?"):
 
     # --- Logic chatbot đơn giản ---
     if "thời tiết" in prompt.lower():
-        chatbot_response = "Thời tiết hôm nay ở Hải Dương khá đẹp, trời nắng nhẹ."
+        chatbot_response = (
+            "Thời tiết hôm nay ở Hải Dương khá đẹp, trời nắng nhẹ."
+        )
     elif "giờ" in prompt.lower():
         current_time = time.strftime("%H:%M:%S")
         chatbot_response = f"Bây giờ là {current_time} tại Hải Dương."
     elif "chào" in prompt.lower():
         chatbot_response = "Xin chào! Rất vui được trò chuyện với bạn."
     else:
-        chatbot_response = "Tôi xin lỗi, tôi chưa hiểu câu hỏi này. Bạn có thể hỏi lại không?"
+        chatbot_response = (
+            "Tôi xin lỗi, tôi chưa hiểu câu hỏi này. Bạn có thể hỏi lại không?"
+        )
 
     # Mô phỏng thời gian phản hồi của chatbot
     time.sleep(1)
 
-    st.session_state["messages"].append({"role": "assistant", "content": chatbot_response})
+    st.session_state["messages"].append(
+        {"role": "assistant", "content": chatbot_response}
+    )
     with st.chat_message("assistant"):
         st.markdown(chatbot_response)
-        
+
     # Panel lịch sử ở sidebar
 with st.sidebar:
     st.subheader("Lịch Sử Trò Chuyện")

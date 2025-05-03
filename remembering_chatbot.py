@@ -36,18 +36,24 @@ if prompt := st.chat_input("Bạn muốn nói gì?"):
     elif "bạn biết gì về tôi" in prompt.lower():
         info = []
         if "name" in st.session_state["remembered_info"]:
-            info.append(f"Tên bạn là {st.session_state['remembered_info']['name']}.")
+            info.append(
+                f"Tên bạn là {st.session_state['remembered_info']['name']}."
+            )
         if "location" in st.session_state["remembered_info"]:
-            info.append(f"Bạn sống ở {st.session_state['remembered_info']['location']}.")
+            info.append(
+                f"Bạn sống ở {st.session_state['remembered_info']['location']}."  # noqa: E501
+            )
         if info:
             response = "Tôi biết những điều sau về bạn:\n" + "\n".join(info)
         else:
             response = "Tôi chưa biết gì về bạn cả."
     else:
-        response = "Tôi xin lỗi, tôi chưa hiểu. Bạn có thể cho tôi biết thêm thông tin về bạn không?"
+        response = "Tôi xin lỗi, tôi chưa hiểu. Bạn có thể cho tôi biết thêm thông tin về bạn không?"  # noqa: E501
 
     time.sleep(1)
 
-    st.session_state["messages"].append({"role": "assistant", "content": response})
+    st.session_state["messages"].append(
+        {"role": "assistant", "content": response}
+    )
     with st.chat_message("assistant"):
         st.markdown(response)
